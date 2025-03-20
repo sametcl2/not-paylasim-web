@@ -1,16 +1,13 @@
-import { Categories } from "./components/Categories";
-import { Classes } from "./components/Classes";
-import { Header } from "./sections/Header";
-import { Hero } from "./sections/Hero";
+import { BrowserRouter, Routes, Route } from "react-router";
+import { Home } from "@/pages/Home";
 
 function App() {
   return (
-    <div className="container md:px-4 md:py-8">
-      <Header />
-      <Hero />
-      <Categories />
-      <Classes />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

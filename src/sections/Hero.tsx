@@ -4,7 +4,7 @@ import { SearchBar } from "../components/SearchBar";
 export const Hero = () => {
   return (
     <section className="container">
-      <div className="m-4 px-4 py-8 bg-cyan-50 rounded-2xl">
+      <div className="m-4 px-4 py-8 bg-blue-100 rounded-xl">
         <h1 className="text-5xl tracking-tighter mb-4">
           Aradığın <strong>ders notlarını</strong> bul!
         </h1>
@@ -18,7 +18,9 @@ export const Hero = () => {
           denklemler, Fizik 1, Calculus, Lineer Cebir
         </p>
       </div>
-      {/* <img src={HeroImage} /> */}
+      <div className="md:hidden">
+        <img src={HeroImage} />
+      </div>
     </section>
   );
 };
