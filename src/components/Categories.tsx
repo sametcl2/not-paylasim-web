@@ -4,7 +4,7 @@ import { SmallCard } from "./SmallCard";
 
 export const Categories = () => {
   return (
-    <section className="container max-w-6x mt-12">
+    <section className="max-w-6x mt-12">
       <SectionHeader
         title="Öne Çıkan Dersler"
         seeAllText="Tümünü Gör"

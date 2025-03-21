@@ -4,7 +4,7 @@ import { SectionHeader } from "./SectionHeader";
 
 export const Classes = () => {
   return (
-    <section className="container max-w-6x mt-12">
+    <section className="max-w-6x mt-12">
       <SectionHeader
         title="Öne Çıkan Notlar"
         seeAllText="Tümünü Gör"

@@ -3,8 +3,8 @@ import { SearchBar } from "../components/SearchBar";
 
 export const Hero = () => {
   return (
-    <section className="container">
-      <div className="m-4 px-4 py-8 bg-blue-100 rounded-xl">
+    <section>
+      <div className="max-w-6x m-4 px-4 py-8 bg-blue-100 rounded-xl">
         <h1 className="text-5xl tracking-tighter mb-4">
           Aradığın <strong>ders notlarını</strong> bul!
         </h1>
@@ -14,8 +14,8 @@ export const Hero = () => {
         </p>
         <SearchBar />
         <p className="text-sm text-gray-400">
-          <strong className="text-black">Popüler aramalar: </strong>Diferansiyel
-          denklemler, Fizik 1, Calculus, Lineer Cebir
+          <strong className="text-black">Popüler aramalar: </strong>
+          Diferansiyel denklemler, Fizik 1, Calculus, Lineer Cebir
         </p>
       </div>
       <div className="md:hidden">

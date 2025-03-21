@@ -10,8 +10,8 @@ import {
 
 export const Header = () => {
   return (
-    <header className="sticky top-0 backdrop-blur-md p-6">
-      <div className="container flex justify-between items-center">
+    <header className=" max-w-6x sticky top-0 backdrop-blur-md p-6">
+      <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold">Not Paylaşım</h1>
         <Dialog>
           <DialogTrigger>
