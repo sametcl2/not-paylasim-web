@@ -41,18 +41,4 @@ export const NoteData = [
     pageCount: 22,
     price: "₺75",
   },
-  {
-    id: 3,
-    title: "Calculus 2",
-    description: "Boğaziçiliden Calculus 2 ders notları!",
-    image: "https://placehold.co/600x400",
-    category: "Calculus 2",
-    author: "BUders Boğaziçiliden Özel Ders",
-    date: "12.12.2024",
-    downloadCount: 1200,
-    rate: 5,
-    commentCount: 600,
-    pageCount: 30,
-    price: "₺200",
-  },
 ];

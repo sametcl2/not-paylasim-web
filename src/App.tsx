@@ -1,13 +1,15 @@
-import { BrowserRouter, Routes, Route } from "react-router";
-import { Home } from "@/pages/Home";
+import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router";
+import { AppInitializer } from "./components/AppInitiliazer";
+import { store } from "./store/setup/store";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-      </Routes>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <AppInitializer />
+      </BrowserRouter>
+    </Provider>
   );
 }
 
