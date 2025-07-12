@@ -1,6 +1,6 @@
 import { LoginRequestType, LoginResponseType } from "@/types/login";
 import { authApi } from ".";
-import { setUser } from "@/store/auth";
+import { setLoading, setUser } from "@/store/auth";
 import { AuthType } from "@/types/auth";
 import { saveUserToLocalStorage } from "@/utils/authStorage";
 import { setError } from "@/store/error";
@@ -14,6 +14,7 @@ const extendedApi = authApi.injectEndpoints({
         body,
       }),
       async onQueryStarted(_, { queryFulfilled, dispatch }) {
+        dispatch(setLoading(true));
         queryFulfilled
           .then(async ({ data }) => {
             if (data.user) {
@@ -22,7 +23,10 @@ const extendedApi = authApi.injectEndpoints({
             }
           })
           .catch(() => {
-            dispatch(setError("Login failed. Please check your credentials."));
+            dispatch(setLoading(false));
+            dispatch(
+              setError("Giriş başarısız. Lütfen bilgilerinizi kontrol edin.")
+            );
           });
       },
     }),

@@ -10,9 +10,16 @@ import {
   RegisterFields,
   registerFormSchema,
 } from "./registerFormHelper";
+import { useSelector, useDispatch } from "@/store/setup/hooks";
+import { selectIsLoading } from "@/store/auth";
+import { selectErrorMessage, selectIsError, clearError } from "@/store/error";
 
 export const RegisterForm = () => {
-  const [register, { isError, isLoading }] = useRegisterMutation();
+  const [register] = useRegisterMutation();
+  const dispatch = useDispatch();
+  const isLoading = useSelector(selectIsLoading);
+  const errorMessage = useSelector(selectErrorMessage);
+  const isError = useSelector(selectIsError);
 
   const {
     formState: { errors },
@@ -24,6 +31,8 @@ export const RegisterForm = () => {
   });
 
   async function onSubmit(values: z.infer<typeof registerFormSchema>) {
+    // Önceki hataları temizle
+    dispatch(clearError());
     await register({ ...values });
   }
 
@@ -75,7 +84,7 @@ export const RegisterForm = () => {
           </HelperText>
         )}
       </div>
-      {isError && <HelperText>Kayıt işlemi başarısız oldu.</HelperText>}
+      {isError && <HelperText color="error">{errorMessage}</HelperText>}
       <Button type="submit" disabled={isLoading} className="mt-6">
         {isLoading ? <Spinner size="sm" className="me-3" /> : null}
         Onayla

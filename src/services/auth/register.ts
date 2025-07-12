@@ -1,8 +1,9 @@
-import { setUser } from "@/store/auth";
+import { setLoading, setUser } from "@/store/auth";
 import { authApi } from ".";
 import { RegisterRequestType, RegisterResponseType } from "@/types/register";
 import { AuthType } from "@/types/auth";
 import { saveUserToLocalStorage } from "@/utils/authStorage";
+import { setError } from "@/store/error";
 
 export const extendedApi = authApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -13,12 +14,22 @@ export const extendedApi = authApi.injectEndpoints({
         body,
       }),
       async onQueryStarted(_, { queryFulfilled, dispatch }) {
-        queryFulfilled.then(async ({ data }) => {
-          if (data.user) {
-            dispatch(setUser(data));
-            await saveUserToLocalStorage(data as AuthType);
-          }
-        });
+        dispatch(setLoading(true));
+        queryFulfilled
+          .then(async ({ data }) => {
+            if (data.user) {
+              dispatch(setUser(data));
+              await saveUserToLocalStorage(data as AuthType);
+            }
+          })
+          .catch(() => {
+            dispatch(setLoading(false));
+            dispatch(
+              setError(
+                "Kayıt işlemi başarısız. Lütfen bilgilerinizi kontrol edin."
+              )
+            );
+          });
       },
     }),
   }),

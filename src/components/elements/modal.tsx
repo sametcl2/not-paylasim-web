@@ -34,10 +34,10 @@ const Modal: FC<ModalProps> = ({
   if (!show) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div className="fixed h-screen inset-0 z-50 flex items-center justify-center">
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/50 backdrop-blur-sm"
+        className="fixed h-screen inset-0 bg-black/50 backdrop-blur-sm"
         onClick={onClose}
       />
 
@@ -45,6 +45,7 @@ const Modal: FC<ModalProps> = ({
       <div
         className={`
         relative bg-white rounded-lg shadow-xl border border-gray-200 w-full mx-4
+        max-h-[90vh] overflow-y-auto
         ${getSizeClasses()}
         ${className}
       `}

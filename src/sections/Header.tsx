@@ -6,6 +6,7 @@ import { useState } from "react";
 import { AuthModal } from "@/components/AuthModal";
 import Button from "@/components/elements/button";
 import { useNavigate } from "react-router";
+import { clearError } from "@/store/error";
 
 const navItems = [
   { label: "Nasıl Çalışır", path: "how-it-works" },
@@ -23,6 +24,10 @@ export const Header = () => {
   const isAuthenticated = useSelector(selectIsAuthenticated);
 
   const toggleAuthDialog = () => {
+    // Dialog açılırken hataları temizle
+    if (!isAuthDialogVisible) {
+      dispatch(clearError());
+    }
     setIsAuthDialogVisible(!isAuthDialogVisible);
   };
 
@@ -33,7 +38,8 @@ export const Header = () => {
   const handleLogout = async () => {
     dispatch(removeUser());
     await removeUserFromLocalStorage();
-    toggleAuthDialog();
+    // Logout sonrası modal'ı kapat
+    setIsAuthDialogVisible(false);
   };
 
   const handleNavigation = (item: { label: string; path: string }) => {
@@ -100,7 +106,7 @@ export const Header = () => {
                 onClick={() => navigate("/dashboard")}
                 className="text-heading/70 hover:text-primary transition-colors font-medium"
               >
-                Dashboard
+                Profil
               </button>
               <Button onClick={handleLogout} variant="outline">
                 Çıkış Yap
@@ -108,7 +114,7 @@ export const Header = () => {
             </div>
           ) : (
             <div className="flex items-center gap-3">
-              <Button onClick={toggleAuthDialog}>Ücretsiz Kayıt</Button>
+              <Button onClick={toggleAuthDialog}>Giriş Yap</Button>
             </div>
           )}
         </div>
@@ -152,7 +158,7 @@ export const Header = () => {
                       }}
                       className="w-full text-left text-heading/70 hover:text-primary transition-colors font-medium py-2"
                     >
-                      Dashboard
+                      Profil
                     </button>
                     <Button
                       onClick={() => {

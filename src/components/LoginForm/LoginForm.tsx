@@ -5,9 +5,16 @@ import { z } from "zod";
 import { useLoginMutation } from "@/services/auth/login";
 import { defaultValues, LoginFields, loginFormSchema } from "./loginFormHelper";
 import Button from "../elements/button";
+import { useSelector, useDispatch } from "@/store/setup/hooks";
+import { selectIsLoading } from "@/store/auth";
+import { selectErrorMessage, selectIsError, clearError } from "@/store/error";
 
 export const LoginForm = () => {
-  const [login, { isLoading, isError }] = useLoginMutation();
+  const [login] = useLoginMutation();
+  const dispatch = useDispatch();
+  const isLoading = useSelector(selectIsLoading);
+  const errorMessage = useSelector(selectErrorMessage);
+  const isError = useSelector(selectIsError);
 
   const {
     formState: { errors },
@@ -19,6 +26,8 @@ export const LoginForm = () => {
   });
 
   async function onSubmit(values: z.infer<typeof loginFormSchema>) {
+    // Önceki hataları temizle
+    dispatch(clearError());
     await login({ ...values });
   }
 
@@ -49,9 +58,7 @@ export const LoginForm = () => {
       <Button type="submit" isLoading={isLoading}>
         Onayla
       </Button>
-      {isError && (
-        <HelperText color="error">Kullanıcı Adını Kontrol Et</HelperText>
-      )}
+      {isError && <HelperText color="error">{errorMessage}</HelperText>}
     </form>
   );
 };
