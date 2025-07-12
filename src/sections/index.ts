@@ -1,0 +1,10 @@
+export { Features } from "./Features";
+export { Stats } from "./Stats";
+export { HowItWorks } from "./HowItWorks";
+export { PopularCategories } from "./PopularCategories";
+export { Testimonials } from "./Testimonials";
+export { CTA } from "./CTA";
+export { Footer } from "./Footer";
+export { Hero } from "./Hero";
+export { Header } from "./Header";
+export { FeaturedNotes } from "./FeaturedNotes";

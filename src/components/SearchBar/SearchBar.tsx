@@ -1,6 +1,7 @@
-import { HelperText, TextInput } from "flowbite-react";
+import { HelperText, TextInput } from "@/components/elements/text-input";
 import { useForm } from "react-hook-form";
 import Button from "@/components/elements/button";
+import { Search } from "lucide-react";
 
 type SearchBarProps = {
   onSearch: (query: string) => void;
@@ -22,21 +23,31 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   }
 
   return (
-    <div>
+    <div className="max-w-2xl mx-auto md:mx-0">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex flex-col md:flex-row items-center md:space-x-2 mb-2">
+        <div className="flex items-center gap-2">
           <TextInput
             type="text"
-            className="flex-1"
-            placeholder="Ders, Akademisyen"
-            color={errors.search?.message ? "failure" : "gray"}
+            icon={Search}
+            sizing="md"
+            className="relative flex-1 items-center bg-white rounded-xl border-2 border-accent hover:border-primary/30 transition-all duration-300"
+            placeholder="Ders adı, konu veya akademisyen"
+            color={errors.search?.message ? "error" : undefined}
             {...registerField("search", {
               required: "Bu alan boş bırakılamaz",
             })}
           />
-          <Button type="submit">Ara</Button>
+          <div className="pr-2">
+            <Button type="submit" variant="primary" size="sm">
+              Notlar Gelsin
+            </Button>
+          </div>
         </div>
-        {errors.search && <HelperText>{errors.search.message}</HelperText>}
+        {errors.search && (
+          <HelperText className="mt-3 text-center md:text-left text-destructive font-medium">
+            {errors.search.message}
+          </HelperText>
+        )}
       </form>
     </div>
   );

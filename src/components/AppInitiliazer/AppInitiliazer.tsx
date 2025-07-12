@@ -1,5 +1,7 @@
 import { Home } from "@/pages/Home";
-import Note from "@/pages/Note";
+import { Note } from "@/pages/Note";
+import { Notes } from "@/pages/Notes";
+import NotFound from "@/pages/NotFound";
 import Search from "@/pages/Search";
 import { Header } from "@/sections/Header";
 import { setUser } from "@/store/auth";
@@ -30,7 +32,9 @@ export const AppInitializer = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/search" element={<Search />} />
+          <Route path="/notes" element={<Notes />} />
           <Route path="/note/:id" element={<Note />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
     </>

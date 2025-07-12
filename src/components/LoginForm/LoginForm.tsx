@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { HelperText, TextInput } from "flowbite-react";
+import { HelperText, TextInput } from "@/components/elements/text-input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useLoginMutation } from "@/services/auth/login";
@@ -28,7 +28,7 @@ export const LoginForm = () => {
         <label>E-Mail</label>
         <TextInput
           type="email"
-          color={errors[LoginFields.Email] ? "failure" : "gray"}
+          color={errors[LoginFields.Email] ? "error" : "gray"}
           {...registerField(LoginFields.Email, { required: true })}
         />
         {errors[LoginFields.Email] && (
@@ -39,7 +39,7 @@ export const LoginForm = () => {
         <label>Şifre</label>
         <TextInput
           type="password"
-          color={errors[LoginFields.Password] ? "failure" : "gray"}
+          color={errors[LoginFields.Password] ? "error" : "gray"}
           {...registerField(LoginFields.Password, { required: true })}
         />
         {errors[LoginFields.Password] && (
@@ -50,7 +50,7 @@ export const LoginForm = () => {
         Onayla
       </Button>
       {isError && (
-        <HelperText color="failure">Kullanıcı Adını Kontrol Et</HelperText>
+        <HelperText color="error">Kullanıcı Adını Kontrol Et</HelperText>
       )}
     </form>
   );

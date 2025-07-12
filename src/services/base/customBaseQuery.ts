@@ -20,7 +20,9 @@ import {
   saveUserToLocalStorage,
 } from "@/utils/authStorage";
 
-export const baseUrl = "http://localhost:3001";
+export const baseUrl = import.meta.env.VITE_API_URL;
+
+console.log(baseUrl);
 
 const mutex = new Mutex();
 

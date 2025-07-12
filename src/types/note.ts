@@ -17,6 +17,10 @@ export type Note = {
   updatedAt: string;
 };
 
-export type SearchNoteResponseType = Note[];
+export type SearchNoteResponseType = {
+  data: Note[];
+  message: string;
+  statusCode: number;
+};
 
 export type SearchNoteRequestType = string;

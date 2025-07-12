@@ -1,6 +1,4 @@
 @import "tailwindcss";
-@plugin "flowbite-react/plugin/tailwindcss";
-@source "../.flowbite-react/class-list.json";
 
 @plugin "tailwindcss-animate";
 
@@ -18,14 +16,22 @@ body {
 }
 
 @theme {
-  --color-primary: #78350f;
-  --color-secondary: #fbbf24;
-  --color-accent: #eaeaea;
-  --color-destructive: #d95700;
-  --color-light: #f7f1ed;
-  --color-heading: #0f172a;
-  --color-background: #fffbec;
-  --colo-white: #ffffff;
+  /* Enhanced book-inspired color palette with more variety */
+  --color-primary: #8b4513; /* Rich saddle brown - like old book leather */
+  --color-secondary: #0f172a; /* Dark slate - modern and sophisticated */
+  --color-accent: #f0e8d8; /* Soft cream - like quality paper */
+  --color-destructive: #c65d7b; /* Warm rose - like bookmarks and highlights */
+  --color-light: #f9f6f1; /* Warm off-white - like fresh paper */
+  --color-heading: #2c1810; /* Dark brown - like quality ink */
+  --color-background: #fffef9; /* Warm white - like book pages */
+  --color-book-gold: #d4af37; /* Rich gold - like book gilding */
+  --color-book-green: #4a7c59; /* Forest green - like classic book covers */
+  --color-book-blue: #4a6fa5; /* Deep blue - like academic texts */
+  --color-book-burgundy: #8b2635; /* Wine red - like leather-bound classics */
+  --color-parchment: #f7f1e8; /* Aged parchment */
+  --color-leather: #654321; /* Dark leather brown */
+  --color-sage: #87a96b; /* Soft sage - like old book covers */
+  --color-cream: #fdf6e3; /* Rich cream */
 }
 
 @layer base {
@@ -34,5 +40,22 @@ body {
   }
   body {
     @apply bg-background;
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 }

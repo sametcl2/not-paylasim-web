@@ -1,9 +1,9 @@
 import { SearchNoteRequestType, SearchNoteResponseType } from "@/types/note";
-import { searchApi } from ".";
+import { noteApi } from ".";
 import { setError } from "@/store/error";
 import { setNotes } from "@/store/note";
 
-const extendedApi = searchApi.injectEndpoints({
+const extendedApi = noteApi.injectEndpoints({
   endpoints: (builder) => ({
     searchNote: builder.query<SearchNoteResponseType, SearchNoteRequestType>({
       query: (query) => ({
@@ -13,7 +13,7 @@ const extendedApi = searchApi.injectEndpoints({
       async onQueryStarted(_, { queryFulfilled, dispatch }) {
         queryFulfilled
           .then(({ data }) => {
-            dispatch(setNotes(data));
+            dispatch(setNotes(data.data));
           })
           .catch(() => {
             dispatch(setError("Search failed. Please try again."));

@@ -1,13 +1,31 @@
-import { Categories } from "@/components/Categories";
-import { Classes } from "@/components/Classes";
-import { Hero } from "@/sections/Hero";
+import {
+  Hero,
+  FeaturedNotes,
+  Features,
+  HowItWorks,
+  PopularCategories,
+  Testimonials,
+  CTA,
+  Footer,
+} from "@/sections";
 
 export const Home = () => {
   return (
-    <main className="px-20 pt-10">
-      <Hero />
-      <Categories />
-      <Classes />
+    <main>
+      <div id="hero" className="px-4 md:px-20 py-12">
+        <Hero />
+      </div>
+      <Features />
+      <div id="how-it-works">
+        <HowItWorks />
+      </div>
+      <FeaturedNotes />
+      <div id="categories">
+        <PopularCategories />
+      </div>
+      <Testimonials />
+      <CTA />
+      <Footer />
     </main>
   );
 };

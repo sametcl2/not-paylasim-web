@@ -1,4 +1,4 @@
-import { Card } from "flowbite-react";
+import Card from "@/components/elements/card";
 import Button from "@/components/elements/button";
 
 type SmallCardProps = {

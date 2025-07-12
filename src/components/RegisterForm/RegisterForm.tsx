@@ -1,4 +1,6 @@
-import { Button, HelperText, Spinner, TextInput } from "flowbite-react";
+import { HelperText, TextInput } from "@/components/elements/text-input";
+import Button from "@/components/elements/button";
+import Spinner from "@/components/elements/spinner";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -31,7 +33,7 @@ export const RegisterForm = () => {
         <label>E-Mail</label>
         <TextInput
           type="email"
-          color={errors[RegisterFields.Username] ? "failure" : "gray"}
+          color={errors[RegisterFields.Username] ? "error" : "gray"}
           {...registerField(RegisterFields.Email, { required: true })}
         />
         {errors[RegisterFields.Email] && (
@@ -42,7 +44,7 @@ export const RegisterForm = () => {
         <label>Kullanıcı Adı</label>
         <TextInput
           type="text"
-          color={errors[RegisterFields.Username] ? "failure" : "gray"}
+          color={errors[RegisterFields.Username] ? "error" : "gray"}
           {...registerField(RegisterFields.Username, { required: true })}
         />
         {errors[RegisterFields.Username] && (
@@ -53,7 +55,7 @@ export const RegisterForm = () => {
         <label>Şifre</label>
         <TextInput
           type="password"
-          color={errors[RegisterFields.Password] ? "failure" : "gray"}
+          color={errors[RegisterFields.Password] ? "error" : "gray"}
           {...registerField(RegisterFields.Password, { required: true })}
         />
         {errors[RegisterFields.Password] && (
@@ -64,7 +66,7 @@ export const RegisterForm = () => {
         <label>Şifre Tekrar</label>
         <TextInput
           type="password"
-          color={errors[RegisterFields.ConfirmPassword] ? "failure" : "gray"}
+          color={errors[RegisterFields.ConfirmPassword] ? "error" : "gray"}
           {...registerField(RegisterFields.ConfirmPassword, { required: true })}
         />
         {errors[RegisterFields.ConfirmPassword] && (
@@ -75,14 +77,7 @@ export const RegisterForm = () => {
       </div>
       {isError && <HelperText>Kayıt işlemi başarısız oldu.</HelperText>}
       <Button type="submit" disabled={isLoading} className="mt-6">
-        {isLoading ? (
-          <Spinner
-            size="sm"
-            aria-label="Info spinner example"
-            className="me-3"
-            light
-          />
-        ) : null}
+        {isLoading ? <Spinner size="sm" className="me-3" /> : null}
         Onayla
       </Button>
     </form>
