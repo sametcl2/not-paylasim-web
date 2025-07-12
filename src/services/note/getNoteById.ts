@@ -11,6 +11,7 @@ const extendedApi = noteApi.injectEndpoints({
       async onQueryStarted(_, { queryFulfilled, dispatch }) {
         try {
           queryFulfilled.then(({ data }) => {
+            console.log("Fetched note data:", data);
             // dispatch(setNote(data));
           });
         } catch (error) {
