@@ -93,7 +93,7 @@ export const customBaseQuery: BaseQueryFn<
           release();
           return {
             error: {
-              status: 400,
+              status: 401,
               data: { code: ErrorKeys.tokenExpired },
             },
           };

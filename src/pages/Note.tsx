@@ -24,6 +24,7 @@ import {
   Bookmark,
   BookMarked,
 } from "lucide-react";
+import { useLazyGetNoteByIdQuery } from "@/services/note/getNoteById";
 
 type NoteType = {
   id: number;
@@ -47,24 +48,28 @@ type NoteType = {
 export const Note = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const [note, setNote] = useState<NoteType | null>(null);
-  const [loading, setLoading] = useState(true);
+
   const [isBookmarked, setIsBookmarked] = useState(false);
+
+  const [fetchNote, { data: note, isLoading }] = useLazyGetNoteByIdQuery();
+
+  const handleSearch = async (id: string) => {
+    await fetchNote(id);
+  };
 
   useEffect(() => {
     if (id) {
-      // Simulate API call
-      const foundNote = NoteData.find((n: NoteType) => n.id === parseInt(id));
-      setNote(foundNote || null);
-      setLoading(false);
+      handleSearch(id);
     }
   }, [id]);
+
+  console.log("Note data:", note);
 
   const handleBookmark = () => {
     setIsBookmarked(!isBookmarked);
   };
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="min-h-screen bg-parchment flex items-center justify-center">
         <div className="text-center">
@@ -87,7 +92,7 @@ export const Note = () => {
             Aradığınız not mevcut değil veya kaldırılmış olabilir.
           </p>
           <Button
-            onClick={() => navigate("/notes")}
+            onClick={() => navigate("/search")}
             className="inline-flex items-center gap-2"
           >
             <ArrowLeft className="w-4 h-4" />
@@ -131,15 +136,12 @@ export const Note = () => {
             <div className="flex-1">
               <div className="flex items-center gap-3 mb-4">
                 <Badge color="gray" size="md">
-                  {note.category}
+                  {note.courseName}
                 </Badge>
                 <div className="flex items-center gap-1">
                   <Star className="w-4 h-4 text-accent fill-current" />
                   <span className="text-sm font-medium text-heading">
-                    {note.rate}
-                  </span>
-                  <span className="text-sm text-heading/60">
-                    ({note.commentCount} değerlendirme)
+                    {note.rating.toFixed(1)}
                   </span>
                 </div>
               </div>
@@ -156,11 +158,11 @@ export const Note = () => {
               <div className="flex flex-wrap items-center gap-6 text-heading/60">
                 <div className="flex items-center gap-2">
                   <User className="w-4 h-4" />
-                  <span className="font-medium">{note.author}</span>
+                  <span className="font-medium">{note.owner}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Calendar className="w-4 h-4" />
-                  <span>{note.date}</span>
+                  <span>{note.createdAt}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <GraduationCap className="w-4 h-4" />
@@ -227,27 +229,20 @@ export const Note = () => {
                 </div>
                 <div className="text-sm text-heading/60">Sayfa</div>
               </Card>
-              <Card className="text-center p-4 hover:shadow-lg transition-shadow duration-200">
-                <ThumbsUp className="w-6 h-6 text-primary mx-auto mb-2" />
-                <div className="text-2xl font-bold text-heading">
-                  {note.commentCount}
-                </div>
-                <div className="text-sm text-heading/60">Beğeni</div>
-              </Card>
             </div>
 
             {/* Image Carousel */}
-            {note.images && note.images.length > 0 && (
+            {note.imageUrls && note.imageUrls.length > 0 && (
               <Card className="mb-8">
                 <div className="p-6 border-b border-accent/30">
                   <h3 className="text-2xl font-semibold text-heading flex items-center gap-2">
-                    Not Görselleri - {`${note.images.length} Adet`}
+                    Not Görselleri - {`${note.imageUrls.length} Adet`}
                   </h3>
                 </div>
                 <div className="p-6">
                   <div className="h-96 bg-accent/10 rounded-lg overflow-hidden">
                     <Carousel>
-                      {note.images.map((image, index) => (
+                      {note.imageUrls.map((image, index) => (
                         <div
                           key={index}
                           className="flex items-center justify-center h-full p-4"
@@ -278,10 +273,10 @@ export const Note = () => {
                   <p className="text-heading/80 leading-relaxed mb-6">
                     Bu not{" "}
                     <span className="font-semibold text-primary">
-                      {note.category}
+                      {note.courseName}
                     </span>{" "}
                     kategorisinde hazırlanmış kapsamlı bir çalışma materyalidir.{" "}
-                    <span className="font-semibold">{note.author}</span>{" "}
+                    <span className="font-semibold">{note.owner}</span>{" "}
                     tarafından özenle hazırlanmış bu içerik, konuyla ilgili
                     temel bilgilerden ileri düzey uygulamalara kadar geniş bir
                     yelpazede bilgi sunmaktadır.
@@ -376,13 +371,13 @@ export const Note = () => {
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-heading/60">Kategori</span>
                   <Badge color="success" size="sm">
-                    {note.category}
+                    {note.courseName}
                   </Badge>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-heading/60">Yazar</span>
                   <span className="text-sm text-heading font-medium">
-                    {note.author}
+                    {note.professor}
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
@@ -397,7 +392,7 @@ export const Note = () => {
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-heading/60">Tarih</span>
-                  <span className="text-sm text-heading">{note.date}</span>
+                  <span className="text-sm text-heading">{note.createdAt}</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-heading/60">Sayfa</span>
@@ -416,7 +411,7 @@ export const Note = () => {
               <div className="p-4 space-y-3">
                 {NoteData.filter(
                   (n: (typeof NoteData)[0]) =>
-                    n.category === note.category && n.id !== note.id
+                    n.c === note.courseName && n.id !== note.id
                 )
                   .slice(0, 3)
                   .map((relatedNote: (typeof NoteData)[0]) => (

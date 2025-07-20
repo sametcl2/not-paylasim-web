@@ -24,9 +24,7 @@ const extendedApi = authApi.injectEndpoints({
           })
           .catch(() => {
             dispatch(setLoading(false));
-            dispatch(
-              setError("Giriş başarısız. Lütfen bilgilerinizi kontrol edin.")
-            );
+            dispatch(setError("Giriş başarısız."));
           });
       },
     }),

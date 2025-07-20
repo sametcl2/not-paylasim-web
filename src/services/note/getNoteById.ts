@@ -1,25 +1,24 @@
 import { setError } from "@/store/error";
 import { noteApi } from ".";
+import { NoteDetailsRequestType, NoteDetailsResponseType } from "@/types/note";
 
 const extendedApi = noteApi.injectEndpoints({
   endpoints: (builder) => ({
-    getNoteById: builder.query({
-      query: (id) => ({
-        url: `/notes/${id}`,
-        method: "GET",
-      }),
-      async onQueryStarted(_, { queryFulfilled, dispatch }) {
-        try {
-          queryFulfilled.then(({ data }) => {
-            console.log("Fetched note data:", data);
-            // dispatch(setNote(data));
-          });
-        } catch (error) {
-          dispatch(setError("Something went wrong."));
-        }
-      },
-    }),
+    getNoteById: builder.query<NoteDetailsResponseType, NoteDetailsRequestType>(
+      {
+        query: (id) => ({
+          url: `/notes/${id}`,
+          method: "GET",
+        }),
+        async onQueryStarted(_, { dispatch }) {
+          try {
+          } catch (error) {
+            dispatch(setError("Something went wrong."));
+          }
+        },
+      }
+    ),
   }),
 });
 
-export const { useGetNoteByIdQuery } = extendedApi;
+export const { useGetNoteByIdQuery, useLazyGetNoteByIdQuery } = extendedApi;

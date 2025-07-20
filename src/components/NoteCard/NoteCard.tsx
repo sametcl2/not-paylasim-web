@@ -1,26 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { Star, Download, Eye, ChevronLeft, ChevronRight } from "lucide-react";
+import { Note } from "@/types/note";
 
 type NoteCardProps = {
-  note: {
-    id: number;
-    title: string;
-    subject?: string;
-    category?: string;
-    professor: string;
-    university: string;
-    rating?: number;
-    rate?: number;
-    downloads?: number;
-    downloadCount?: number;
-    views?: number;
-    pageCount?: number;
-    price: number;
-    preview?: string;
-    images: string[];
-    tags: string[];
-  };
+  note: Note;
   className?: string;
 };
 
@@ -31,14 +15,14 @@ export const NoteCard = ({ note, className = "" }: NoteCardProps) => {
   const handlePrevImage = (e: React.MouseEvent) => {
     e.stopPropagation();
     setCurrentImageIndex((prev) =>
-      prev === 0 ? note.images.length - 1 : prev - 1
+      prev === 0 ? note.imageUrls.length - 1 : prev - 1
     );
   };
 
   const handleNextImage = (e: React.MouseEvent) => {
     e.stopPropagation();
     setCurrentImageIndex((prev) =>
-      prev === note.images.length - 1 ? 0 : prev + 1
+      prev === note.imageUrls.length - 1 ? 0 : prev + 1
     );
   };
 
@@ -48,15 +32,26 @@ export const NoteCard = ({ note, className = "" }: NoteCardProps) => {
   };
 
   const handleCardClick = () => {
-    navigate(`/note/${note.id}`);
+    navigate(`/note/${note._id}`);
   };
 
   // Normalize data between different structures
   const displayData = {
-    rating: note.rating || note.rate || 0,
-    downloads: note.downloads || note.downloadCount || 0,
-    category: note.subject || note.category || "",
+    rating: note.rating || note.rating || 0,
+    downloads: note.downloadCount || note.downloadCount || 0,
+    category: note.courseName || "",
   };
+
+  if (!note.imageUrls || note.imageUrls.length === 0) {
+    return Array(3)
+      .fill(null)
+      .map((_, index) => (
+        <div
+          key={index}
+          className={`bg-accent/10 h-48 rounded-2xl animate-pulse ${className}`}
+        />
+      ));
+  }
 
   return (
     <div
@@ -67,13 +62,13 @@ export const NoteCard = ({ note, className = "" }: NoteCardProps) => {
       <div className="relative group/carousel">
         <div className="relative h-48 bg-accent/10 overflow-hidden">
           <img
-            src={note.images[currentImageIndex]}
+            src={note.imageUrls[currentImageIndex]}
             alt={`${note.title} - Sayfa ${currentImageIndex + 1}`}
             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
           />
 
           {/* Navigation arrows */}
-          {note.images.length > 1 && (
+          {note.imageUrls.length > 1 && (
             <>
               <button
                 onClick={handlePrevImage}
@@ -93,7 +88,7 @@ export const NoteCard = ({ note, className = "" }: NoteCardProps) => {
           {/* Price badge */}
           <div className="absolute top-4 right-4">
             <div className="bg-primary text-white px-3 py-1.5 rounded-full shadow-lg">
-              <span className="text-sm font-bold">₺{note.price}</span>
+              <span className="text-sm font-bold">₺{}</span>
             </div>
           </div>
 
@@ -106,9 +101,9 @@ export const NoteCard = ({ note, className = "" }: NoteCardProps) => {
         </div>
 
         {/* Image indicators */}
-        {note.images.length > 1 && (
+        {note.imageUrls.length > 1 && (
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5">
-            {note.images.map((_, index) => (
+            {note.imageUrls.map((_, index) => (
               <button
                 key={index}
                 onClick={(e) => handleImageIndicatorClick(e, index)}
@@ -163,7 +158,6 @@ export const NoteCard = ({ note, className = "" }: NoteCardProps) => {
           )}
         </div>
 
-        {/* Stats */}
         <div className="flex items-center justify-between pt-4 border-t border-accent/20">
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-1.5 text-heading/60">
@@ -172,14 +166,6 @@ export const NoteCard = ({ note, className = "" }: NoteCardProps) => {
                 {displayData.downloads.toLocaleString()}
               </span>
             </div>
-            {note.views && (
-              <div className="flex items-center gap-1.5 text-heading/60">
-                <Eye className="w-4 h-4 text-primary" />
-                <span className="text-sm font-medium">
-                  {note.views.toLocaleString()}
-                </span>
-              </div>
-            )}
             {note.pageCount && (
               <div className="flex items-center gap-1.5 text-heading/60">
                 <span className="text-sm font-medium">

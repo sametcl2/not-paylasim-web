@@ -11,7 +11,7 @@ import { clearError } from "@/store/error";
 const navItems = [
   { label: "Nasıl Çalışır", path: "how-it-works" },
   { label: "Kategoriler", path: "categories" },
-  { label: "Not Ara", path: "/notes" },
+  { label: "Not Ara", path: "/search" },
 ];
 
 export const Header = () => {
@@ -43,9 +43,9 @@ export const Header = () => {
   };
 
   const handleNavigation = (item: { label: string; path: string }) => {
-    if (item.path === "/notes") {
-      // Navigate to notes page
-      navigate("/notes");
+    if (item.path === "/search") {
+      // Navigate to search page
+      navigate("/search");
     } else {
       // Navigate to home page first if not already there
       if (window.location.pathname !== "/") {

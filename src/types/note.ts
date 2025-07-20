@@ -8,10 +8,12 @@ export type Note = {
   professor: string;
   tags: string[];
   imageUrls: string[];
+  price: number;
   isPaid: boolean;
   isActive: boolean;
   rating: number;
   ratingCount: number;
+  pageCount: number;
   downloadCount: number;
   createdAt: string;
   updatedAt: string;
@@ -24,3 +26,7 @@ export type SearchNoteResponseType = {
 };
 
 export type SearchNoteRequestType = string;
+
+export type NoteDetailsResponseType = Note;
+
+export type NoteDetailsRequestType = string;
