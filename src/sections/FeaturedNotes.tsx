@@ -1,117 +1,159 @@
 import { BookOpen, TrendingUp } from "lucide-react";
 import { useNavigate } from "react-router";
 import { NoteCard } from "@/components/NoteCard";
+import { Note } from "@/types/note";
 
 export const FeaturedNotes = () => {
   const navigate = useNavigate();
-  const featuredNotes = [
+  const featuredNotes: Note[] = [
     {
-      id: 1,
+      _id: "1",
+      owner: "user1",
       title: "Diferansiyel Denklemler - Tam Kurs Notları",
-      subject: "Matematik",
+      description:
+        "Diferansiyel denklemleri kapsamlı bir şekilde anlatan ders notları",
+      courseName: "Matematik",
       professor: "Prof. Dr. Ahmet Yılmaz",
       university: "İTÜ",
       rating: 4.9,
-      downloads: 1250,
-      views: 3400,
+      ratingCount: 125,
+      downloadCount: 1250,
       price: 45,
-      preview: "📊",
-      images: [
+      isPaid: true,
+      isActive: true,
+      pageCount: 45,
+      imageUrls: [
         "https://placehold.co/300x200/8B4513/FFFFFF?text=Sayfa+1+-+Diferansiyel+Denklemler",
         "https://placehold.co/300x200/D4AF37/FFFFFF?text=Sayfa+2+-+Çözüm+Örnekleri",
         "https://placehold.co/300x200/4A7C59/FFFFFF?text=Sayfa+3+-+Formüller",
       ],
       tags: ["Çözümlü Örnekler", "Final Hazırlık", "Detaylı Anlatım"],
+      createdAt: "2024-01-15T10:30:00Z",
+      updatedAt: "2024-01-15T10:30:00Z",
     },
     {
-      id: 2,
+      _id: "2",
+      owner: "user2",
       title: "Fizik 1 - Mekanik Konuları",
-      subject: "Fizik",
+      description:
+        "Fizik mekanik konularını detaylı bir şekilde anlatan ders notları",
+      courseName: "Fizik",
       professor: "Doç. Dr. Elif Kaya",
       university: "ODTÜ",
       rating: 4.8,
-      downloads: 980,
-      views: 2800,
+      ratingCount: 98,
+      downloadCount: 980,
       price: 35,
-      preview: "⚛️",
-      images: [
+      isPaid: true,
+      isActive: true,
+      pageCount: 38,
+      imageUrls: [
         "https://placehold.co/300x200/4A6FA5/FFFFFF?text=Sayfa+1+-+Mekanik+Giriş",
         "https://placehold.co/300x200/8B4513/FFFFFF?text=Sayfa+2+-+Hareket+Denklemleri",
         "https://placehold.co/300x200/654321/FFFFFF?text=Sayfa+3+-+Örnek+Çözümler",
       ],
       tags: ["Grafik Çözümler", "Formül Listesi", "Pratik Örnekler"],
+      createdAt: "2024-01-20T14:15:00Z",
+      updatedAt: "2024-01-20T14:15:00Z",
     },
     {
-      id: 3,
+      _id: "3",
+      owner: "user3",
       title: "Organik Kimya - Reaksiyon Mekanizmaları",
-      subject: "Kimya",
+      description:
+        "Organik kimya reaksiyon mekanizmalarını detaylı anlatan notlar",
+      courseName: "Kimya",
       professor: "Prof. Dr. Mehmet Demir",
       university: "Boğaziçi",
       rating: 4.7,
-      downloads: 750,
-      views: 2100,
+      ratingCount: 75,
+      downloadCount: 750,
       price: 50,
-      preview: "🧪",
-      images: [
+      isPaid: true,
+      isActive: true,
+      pageCount: 52,
+      imageUrls: [
         "https://placehold.co/300x200/8B2635/FFFFFF?text=Sayfa+1+-+Organik+Kimya",
         "https://placehold.co/300x200/D4AF37/FFFFFF?text=Sayfa+2+-+Reaksiyon+Şemaları",
         "https://placehold.co/300x200/87A96B/FFFFFF?text=Sayfa+3+-+3D+Modeller",
       ],
       tags: ["3D Modeller", "Reaksiyon Şemaları", "Lab Notları"],
+      createdAt: "2024-02-01T09:20:00Z",
+      updatedAt: "2024-02-01T09:20:00Z",
     },
     {
-      id: 4,
+      _id: "4",
+      owner: "user4",
       title: "Algoritma ve Programlama",
-      subject: "Bilgisayar",
+      description:
+        "Algoritma ve programlama temellerini öğreten kapsamlı notlar",
+      courseName: "Bilgisayar Mühendisliği",
       professor: "Dr. Ayşe Özkan",
       university: "Hacettepe",
       rating: 4.9,
-      downloads: 1800,
-      views: 4500,
+      ratingCount: 180,
+      downloadCount: 1800,
       price: 40,
-      preview: "💻",
-      images: [
+      isPaid: true,
+      isActive: true,
+      pageCount: 65,
+      imageUrls: [
         "https://placehold.co/300x200/4A7C59/FFFFFF?text=Sayfa+1+-+Algoritma+Giriş",
         "https://placehold.co/300x200/4A6FA5/FFFFFF?text=Sayfa+2+-+Kod+Örnekleri",
         "https://placehold.co/300x200/8B4513/FFFFFF?text=Sayfa+3+-+Flowchart",
       ],
       tags: ["Kod Örnekleri", "Flowchart", "Python & Java"],
+      createdAt: "2024-01-10T16:45:00Z",
+      updatedAt: "2024-01-10T16:45:00Z",
     },
     {
-      id: 5,
+      _id: "5",
+      owner: "user5",
       title: "Lineer Cebir - Matris İşlemleri",
-      subject: "Matematik",
+      description: "Lineer cebir ve matris işlemlerini kapsayan detaylı notlar",
+      courseName: "Matematik",
       professor: "Prof. Dr. Fatma Şen",
       university: "Bilkent",
       rating: 4.6,
-      downloads: 650,
-      views: 1900,
+      ratingCount: 65,
+      downloadCount: 650,
       price: 30,
-      preview: "📐",
-      images: [
+      isPaid: true,
+      isActive: true,
+      pageCount: 42,
+      imageUrls: [
         "https://placehold.co/300x200/D4AF37/FFFFFF?text=Sayfa+1+-+Matris+Giriş",
         "https://placehold.co/300x200/8B2635/FFFFFF?text=Sayfa+2+-+İşlemler",
         "https://placehold.co/300x200/654321/FFFFFF?text=Sayfa+3+-+Çözümler",
       ],
       tags: ["Çözüm Adımları", "Görsel Anlatım", "Sınav Soruları"],
+      createdAt: "2024-02-05T11:30:00Z",
+      updatedAt: "2024-02-05T11:30:00Z",
     },
     {
-      id: 6,
+      _id: "6",
+      owner: "user6",
       title: "İngilizce Grammar - Complete Guide",
-      subject: "İngilizce",
+      description:
+        "İngilizce dilbilgisi kurallarını kapsamlı şekilde anlatan rehber",
+      courseName: "İngilizce",
       professor: "Dr. John Smith",
       university: "Bilgi Üniversitesi",
       rating: 4.8,
-      downloads: 1100,
-      views: 3200,
+      ratingCount: 110,
+      downloadCount: 1100,
       price: 25,
-      preview: "🗣️",
-      images: [
+      isPaid: true,
+      isActive: true,
+      pageCount: 35,
+      imageUrls: [
         "https://placehold.co/300x200/87A96B/FFFFFF?text=Sayfa+1+-+Grammar+Rules",
         "https://placehold.co/300x200/4A6FA5/FFFFFF?text=Sayfa+2+-+Practice+Tests",
         "https://placehold.co/300x200/8B4513/FFFFFF?text=Sayfa+3+-+Speaking+Tips",
       ],
       tags: ["Grammar Rules", "Practice Tests", "Speaking Tips"],
+      createdAt: "2024-01-25T13:10:00Z",
+      updatedAt: "2024-01-25T13:10:00Z",
     },
   ];
 
@@ -141,7 +183,7 @@ export const FeaturedNotes = () => {
             <div className="flex gap-6 min-w-max px-4">
               {featuredNotes.map((note) => (
                 <NoteCard
-                  key={note.id}
+                  key={note._id}
                   note={note}
                   className="min-w-[320px] max-w-[320px] ml-2"
                 />

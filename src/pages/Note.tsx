@@ -1,30 +1,29 @@
-import { useParams, useNavigate } from "react-router";
-import { useEffect, useState } from "react";
-import { NoteData } from "@/mocks/NoteMock";
-import Card from "@/components/elements/card";
-import Carousel from "@/components/elements/carousel";
 import Badge from "@/components/elements/badge";
 import Button from "@/components/elements/button";
+import Card from "@/components/elements/card";
+import Carousel from "@/components/elements/carousel";
+import { NoteData } from "@/mocks/NoteMock";
+import { useLazyGetNoteByIdQuery } from "@/services/note/getNoteById";
 import {
   ArrowLeft,
-  Star,
-  Download,
-  Eye,
-  Share2,
-  Calendar,
-  User,
-  BookOpen,
   Award,
+  Bookmark,
+  BookMarked,
+  BookOpen,
+  Calendar,
+  ChevronRight,
+  Download,
+  ExternalLink,
+  Eye,
   FileText,
   GraduationCap,
   Home,
-  ChevronRight,
-  ThumbsUp,
-  ExternalLink,
-  Bookmark,
-  BookMarked,
+  Share2,
+  Star,
+  User,
 } from "lucide-react";
-import { useLazyGetNoteByIdQuery } from "@/services/note/getNoteById";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router";
 
 type NoteType = {
   id: number;
@@ -410,8 +409,7 @@ export const Note = () => {
               </div>
               <div className="p-4 space-y-3">
                 {NoteData.filter(
-                  (n: (typeof NoteData)[0]) =>
-                    n.c === note.courseName && n.id !== note.id
+                  (n: (typeof NoteData)[0]) => n.category === note.courseName
                 )
                   .slice(0, 3)
                   .map((relatedNote: (typeof NoteData)[0]) => (

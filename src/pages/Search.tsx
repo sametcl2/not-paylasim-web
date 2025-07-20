@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
-import { Filter, Search as SearchIcon, BookOpen } from "lucide-react";
-import { NoteData } from "@/mocks/NoteMock";
 import { NoteCard } from "@/components/NoteCard";
-import { useSearchParams } from "react-router";
+import { NoteData } from "@/mocks/NoteMock";
 import { useLazySearchNoteQuery } from "@/services/note/searchNote";
+import { Filter, Search as SearchIcon } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router";
 
 export const Search = () => {
   const [searchTerm, setSearchTerm] = useState("");

@@ -1,7 +1,7 @@
+import { Note } from "@/types/note";
+import { ChevronLeft, ChevronRight, Download, Star } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import { Star, Download, Eye, ChevronLeft, ChevronRight } from "lucide-react";
-import { Note } from "@/types/note";
 
 type NoteCardProps = {
   note: Note;
