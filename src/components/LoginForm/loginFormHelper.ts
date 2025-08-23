@@ -1,12 +1,16 @@
 import { z } from "zod";
-import { LoginRequestType } from "@/types/login";
 
 export enum LoginFields {
   Email = "email",
   Password = "password",
 }
 
-export const defaultValues: LoginRequestType = {
+export type LoginFormData = {
+  [LoginFields.Email]: string;
+  [LoginFields.Password]: string;
+};
+
+export const defaultValues: LoginFormData = {
   [LoginFields.Email]: "",
   [LoginFields.Password]: "12345678",
 };

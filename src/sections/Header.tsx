@@ -38,7 +38,6 @@ export const Header = () => {
   const handleLogout = async () => {
     dispatch(removeUser());
     await removeUserFromLocalStorage();
-    // Logout sonrası modal'ı kapat
     setIsAuthDialogVisible(false);
   };
 
@@ -47,15 +46,12 @@ export const Header = () => {
       // Navigate to search page
       navigate("/search");
     } else {
-      // Navigate to home page first if not already there
       if (window.location.pathname !== "/") {
         navigate("/");
-        // Wait for navigation to complete before scrolling
         setTimeout(() => {
           scrollToSection(item.path);
         }, 100);
       } else {
-        // Already on home page, just scroll
         scrollToSection(item.path);
       }
     }
@@ -91,11 +87,19 @@ export const Header = () => {
             <button
               key={index}
               onClick={() => handleNavigation(item)}
-              className="text-heading/70 hover:text-primary transition-colors font-medium"
+              className="text-heading/70 hover:text-primary transition-colors font-medium cursor-pointer"
             >
               {item.label}
             </button>
           ))}
+          {isAuthenticated && (
+            <button
+              onClick={() => navigate("/create-note")}
+              className="text-heading/70 hover:text-primary transition-colors font-medium cursor-pointer"
+            >
+              Not Paylaş
+            </button>
+          )}
         </nav>
 
         {/* Desktop Auth */}
@@ -103,8 +107,8 @@ export const Header = () => {
           {isAuthenticated ? (
             <div className="flex items-center gap-4">
               <button
-                onClick={() => navigate("/dashboard")}
-                className="text-heading/70 hover:text-primary transition-colors font-medium"
+                onClick={() => navigate("/profile")}
+                className="text-heading/70 hover:text-primary transition-colors font-medium cursor-pointer"
               >
                 Profil
               </button>
@@ -122,7 +126,7 @@ export const Header = () => {
         {/* Mobile Menu Button */}
         <button
           onClick={toggleMobileMenu}
-          className="md:hidden p-2 text-heading"
+          className="md:hidden p-2 text-heading cursor-pointer"
         >
           {isMobileMenuOpen ? (
             <X className="w-6 h-6" />
@@ -142,21 +146,32 @@ export const Header = () => {
                     handleNavigation(item);
                     setIsMobileMenuOpen(false);
                   }}
-                  className="text-left text-heading/70 hover:text-primary transition-colors font-medium py-2"
+                  className="text-left text-heading/70 hover:text-primary transition-colors font-medium py-2 cursor-pointer"
                 >
                   {item.label}
                 </button>
               ))}
+              {isAuthenticated && (
+                <button
+                  onClick={() => {
+                    navigate("/create-note");
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="text-left text-heading/70 hover:text-primary transition-colors font-medium py-2 cursor-pointer"
+                >
+                  Not Paylaş
+                </button>
+              )}
 
               <div className="border-t border-accent pt-4">
                 {isAuthenticated ? (
                   <div className="space-y-3">
                     <button
                       onClick={() => {
-                        navigate("/dashboard");
+                        navigate("/profile");
                         setIsMobileMenuOpen(false);
                       }}
-                      className="w-full text-left text-heading/70 hover:text-primary transition-colors font-medium py-2"
+                      className="w-full text-left text-heading/70 hover:text-primary transition-colors font-medium py-2 cursor-pointer"
                     >
                       Profil
                     </button>
@@ -177,7 +192,7 @@ export const Header = () => {
                         toggleAuthDialog();
                         setIsMobileMenuOpen(false);
                       }}
-                      className="w-full text-left text-heading/70 hover:text-primary transition-colors font-medium py-2"
+                      className="w-full text-left text-heading/70 hover:text-primary transition-colors font-medium py-2 cursor-pointer"
                     >
                       Giriş Yap
                     </button>

@@ -1,10 +1,10 @@
 export type AuthType = {
-  user: UserType;
+  user: TokenPayloadType;
   accessToken: string;
   refreshToken: string;
 };
 
-export type UserType = {
+export type TokenPayloadType = {
   id: string;
   email: string;
   username: string;

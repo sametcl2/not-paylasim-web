@@ -5,12 +5,13 @@ import {
   ModalHeader,
 } from "@/components/elements/modal";
 import { useState, useEffect } from "react";
-import { LoginForm } from "../LoginForm";
-import { RegisterForm } from "../RegisterForm";
-import { BookOpen } from "lucide-react";
+import { LoginForm, LoginFormData } from "../LoginForm";
+import { RegisterForm, RegisterFormData } from "../RegisterForm";
 import { useSelector, useDispatch } from "@/store/setup/hooks";
 import { selectIsAuthenticated } from "@/store/auth";
 import { clearError } from "@/store/error";
+import { useLoginMutation } from "@/services/auth/login";
+import { useRegisterMutation } from "@/services/auth/register";
 
 enum AuthModalType {
   Login = "login",
@@ -27,6 +28,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isVisible, onHide }) => {
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const dispatch = useDispatch();
 
+  const [login, { isLoading: loginLoading }] = useLoginMutation();
+  const [register, { isLoading: registerLoading }] = useRegisterMutation();
+
   // Modal'ı auth başarılı olduğunda kapat
   useEffect(() => {
     if (isAuthenticated && isVisible) {
@@ -35,7 +39,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isVisible, onHide }) => {
   }, [isAuthenticated, isVisible, onHide]);
 
   const toggleAuthType = () => {
-    // Form değiştirildiğinde hataları temizle
     dispatch(clearError());
     setAuthType(
       authType === AuthModalType.Login
@@ -48,6 +51,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isVisible, onHide }) => {
   const handleClose = () => {
     dispatch(clearError());
     onHide();
+  };
+
+  const handleLoginSubmit = async (data: LoginFormData) => {
+    await login({ ...data });
+  };
+
+  const handleRegisterSubmit = async (data: RegisterFormData) => {
+    await register({ ...data });
   };
 
   return (
@@ -76,9 +87,15 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isVisible, onHide }) => {
         <ModalBody className="p-6 bg-white">
           <div className="space-y-6">
             {authType === AuthModalType.Login ? (
-              <LoginForm />
+              <LoginForm
+                onSubmit={handleLoginSubmit}
+                isLoading={loginLoading}
+              />
             ) : (
-              <RegisterForm />
+              <RegisterForm
+                onSubmit={handleRegisterSubmit}
+                isLoading={registerLoading}
+              />
             )}
           </div>
         </ModalBody>
@@ -87,14 +104,13 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isVisible, onHide }) => {
           <div className="w-full text-center">
             <p className="text-sm text-heading/70 mb-2">
               {authType === AuthModalType.Login
-                ? "Hesabınız yok mu?"
-                : "Zaten bir hesabınız var mı?"}
+                ? "Hesabın yok mu?"
+                : "Zaten bir hesabın var mı?"}
             </p>
             <button
               onClick={toggleAuthType}
-              className="inline-flex items-center gap-2 text-primary hover:text-primary/80 font-semibold transition-colors"
+              className="inline-flex items-center gap-2 cursor-pointer text-primary hover:text-primary/80 font-semibold transition-colors"
             >
-              <BookOpen className="w-4 h-4" />
               {authType === AuthModalType.Login ? "Kayıt Ol" : "Giriş Yap"}
             </button>
           </div>

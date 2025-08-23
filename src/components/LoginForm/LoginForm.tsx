@@ -2,17 +2,23 @@ import { useForm } from "react-hook-form";
 import { HelperText, TextInput } from "@/components/elements/text-input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useLoginMutation } from "@/services/auth/login";
-import { defaultValues, LoginFields, loginFormSchema } from "./loginFormHelper";
+import {
+  defaultValues,
+  LoginFields,
+  loginFormSchema,
+  LoginFormData,
+} from "./loginFormHelper";
 import Button from "../elements/button";
 import { useSelector, useDispatch } from "@/store/setup/hooks";
-import { selectIsLoading } from "@/store/auth";
 import { selectErrorMessage, selectIsError, clearError } from "@/store/error";
 
-export const LoginForm = () => {
-  const [login] = useLoginMutation();
+interface LoginFormProps {
+  onSubmit: (data: LoginFormData) => Promise<void>;
+  isLoading: boolean;
+}
+
+export const LoginForm = ({ onSubmit, isLoading }: LoginFormProps) => {
   const dispatch = useDispatch();
-  const isLoading = useSelector(selectIsLoading);
   const errorMessage = useSelector(selectErrorMessage);
   const isError = useSelector(selectIsError);
 
@@ -25,14 +31,13 @@ export const LoginForm = () => {
     defaultValues,
   });
 
-  async function onSubmit(values: z.infer<typeof loginFormSchema>) {
-    // Önceki hataları temizle
+  async function handleFormSubmit(values: z.infer<typeof loginFormSchema>) {
     dispatch(clearError());
-    await login({ ...values });
+    await onSubmit(values);
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(handleFormSubmit)}>
       <div className="mb-3 block">
         <label>E-Mail</label>
         <TextInput

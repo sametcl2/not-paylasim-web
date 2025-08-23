@@ -1,23 +1,25 @@
-import { HelperText, TextInput } from "@/components/elements/text-input";
 import Button from "@/components/elements/button";
 import Spinner from "@/components/elements/spinner";
-import { useForm } from "react-hook-form";
+import { HelperText, TextInput } from "@/components/elements/text-input";
+import { clearError, selectErrorMessage, selectIsError } from "@/store/error";
+import { useDispatch, useSelector } from "@/store/setup/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useRegisterMutation } from "@/services/auth/register";
 import {
   defaultValues,
   RegisterFields,
+  RegisterFormData,
   registerFormSchema,
 } from "./registerFormHelper";
-import { useSelector, useDispatch } from "@/store/setup/hooks";
-import { selectIsLoading } from "@/store/auth";
-import { selectErrorMessage, selectIsError, clearError } from "@/store/error";
 
-export const RegisterForm = () => {
-  const [register] = useRegisterMutation();
+interface RegisterFormProps {
+  onSubmit: (data: RegisterFormData) => Promise<void>;
+  isLoading: boolean;
+}
+
+export const RegisterForm = ({ onSubmit, isLoading }: RegisterFormProps) => {
   const dispatch = useDispatch();
-  const isLoading = useSelector(selectIsLoading);
   const errorMessage = useSelector(selectErrorMessage);
   const isError = useSelector(selectIsError);
 
@@ -30,19 +32,18 @@ export const RegisterForm = () => {
     defaultValues,
   });
 
-  async function onSubmit(values: z.infer<typeof registerFormSchema>) {
-    // Önceki hataları temizle
+  async function handleFormSubmit(values: z.infer<typeof registerFormSchema>) {
     dispatch(clearError());
-    await register({ ...values });
+    await onSubmit(values);
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(handleFormSubmit)}>
       <div className="mb-3 block">
         <label>E-Mail</label>
         <TextInput
           type="email"
-          color={errors[RegisterFields.Username] ? "error" : "gray"}
+          color={errors[RegisterFields.Email] ? "error" : "gray"}
           {...registerField(RegisterFields.Email, { required: true })}
         />
         {errors[RegisterFields.Email] && (

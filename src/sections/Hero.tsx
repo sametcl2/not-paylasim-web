@@ -7,7 +7,8 @@ export const Hero = () => {
   const navigate = useNavigate();
 
   const handleSearch = (query: string) => {
-    navigate(`/search?keyword=${query}`);
+    const parsedQuery = query.trim().toLowerCase();
+    navigate(`/search?keyword=${encodeURIComponent(parsedQuery)}`);
   };
 
   return (

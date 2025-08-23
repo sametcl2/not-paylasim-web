@@ -1,9 +1,11 @@
+import { AuthModal } from "@/components/AuthModal";
 import Badge from "@/components/elements/badge";
 import Button from "@/components/elements/button";
 import Card from "@/components/elements/card";
 import Carousel from "@/components/elements/carousel";
-import { NoteData } from "@/mocks/NoteMock";
 import { useLazyGetNoteByIdQuery } from "@/services/note/getNoteById";
+import { selectIsAuthenticated } from "@/store/auth";
+import { useSelector } from "@/store/setup/hooks";
 import {
   ArrowLeft,
   Award,
@@ -13,44 +15,29 @@ import {
   Calendar,
   ChevronRight,
   Download,
-  ExternalLink,
   Eye,
   FileText,
   GraduationCap,
   Home,
   Share2,
+  ShoppingCart,
   Star,
   User,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 
-type NoteType = {
-  id: number;
-  title: string;
-  description: string;
-  image: string;
-  category: string;
-  author: string;
-  date: string;
-  downloadCount: number;
-  rate: number;
-  commentCount: number;
-  pageCount: number;
-  price: number;
-  university: string;
-  professor: string;
-  tags: string[];
-  images: string[];
-};
-
 export const Note = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const isAuthenticated = useSelector(selectIsAuthenticated);
 
   const [isBookmarked, setIsBookmarked] = useState(false);
+  const [isAuthModalVisible, setIsAuthModalVisible] = useState(false);
 
   const [fetchNote, { data: note, isLoading }] = useLazyGetNoteByIdQuery();
+
+  console.log(note);
 
   const handleSearch = async (id: string) => {
     await fetchNote(id);
@@ -62,10 +49,30 @@ export const Note = () => {
     }
   }, [id]);
 
-  console.log("Note data:", note);
-
   const handleBookmark = () => {
+    if (!isAuthenticated) {
+      setIsAuthModalVisible(true);
+      return;
+    }
     setIsBookmarked(!isBookmarked);
+  };
+
+  const handlePurchase = () => {
+    if (!isAuthenticated) {
+      setIsAuthModalVisible(true);
+      return;
+    }
+    // Handle purchase logic here
+    console.log("Purchasing note...");
+  };
+
+  const handleShare = () => {
+    if (!isAuthenticated) {
+      setIsAuthModalVisible(true);
+      return;
+    }
+    // Handle share logic here
+    console.log("Sharing note...");
   };
 
   if (isLoading) {
@@ -138,8 +145,8 @@ export const Note = () => {
                   {note.courseName}
                 </Badge>
                 <div className="flex items-center gap-1">
-                  <Star className="w-4 h-4 text-accent fill-current" />
-                  <span className="text-sm font-medium text-heading">
+                  <Star className="w-4 h-4 text-yellow-500 fill-current" />
+                  <span className="text-sm font-medium text-yellow-600">
                     {note.rating.toFixed(1)}
                   </span>
                 </div>
@@ -155,10 +162,12 @@ export const Note = () => {
 
               {/* Author & Date */}
               <div className="flex flex-wrap items-center gap-6 text-heading/60">
-                <div className="flex items-center gap-2">
-                  <User className="w-4 h-4" />
-                  <span className="font-medium">{note.owner}</span>
-                </div>
+                {note.owner && (
+                  <div className="flex items-center gap-2">
+                    <User className="w-4 h-4" />
+                    <span className="font-medium">{note.owner?.name}</span>
+                  </div>
+                )}
                 <div className="flex items-center gap-2">
                   <Calendar className="w-4 h-4" />
                   <span>{note.createdAt}</span>
@@ -172,9 +181,12 @@ export const Note = () => {
 
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row lg:flex-col gap-3 lg:min-w-[200px]">
-              <Button className="inline-flex items-center gap-2 justify-center">
-                <Download className="w-4 h-4" />
-                Notu İndir
+              <Button
+                onClick={handlePurchase}
+                className="inline-flex items-center gap-2 justify-center"
+              >
+                <ShoppingCart className="w-4 h-4" />
+                Satın Al {note.price && `- ₺${note.price}`}
               </Button>
               <Button
                 outline
@@ -190,6 +202,7 @@ export const Note = () => {
               </Button>
               <Button
                 outline
+                onClick={handleShare}
                 className="inline-flex items-center gap-2 justify-center"
               >
                 <Share2 className="w-4 h-4" />
@@ -230,12 +243,14 @@ export const Note = () => {
               </Card>
             </div>
 
-            {/* Image Carousel */}
             {note.imageUrls && note.imageUrls.length > 0 && (
               <Card className="mb-8">
                 <div className="p-6 border-b border-accent/30">
                   <h3 className="text-2xl font-semibold text-heading flex items-center gap-2">
-                    Not Görselleri - {`${note.imageUrls.length} Adet`}
+                    Not Görselleri -{" "}
+                    {isAuthenticated
+                      ? `${note.imageUrls.length} Adet`
+                      : "Tüm Görselleri Görmek İçin Satın Alın"}
                   </h3>
                 </div>
                 <div className="p-6">
@@ -275,7 +290,9 @@ export const Note = () => {
                       {note.courseName}
                     </span>{" "}
                     kategorisinde hazırlanmış kapsamlı bir çalışma materyalidir.{" "}
-                    <span className="font-semibold">{note.owner}</span>{" "}
+                    <span className="font-semibold">
+                      {note.owner?.name ?? "Anonim"}
+                    </span>{" "}
                     tarafından özenle hazırlanmış bu içerik, konuyla ilgili
                     temel bilgilerden ileri düzey uygulamalara kadar geniş bir
                     yelpazede bilgi sunmaktadır.
@@ -399,74 +416,14 @@ export const Note = () => {
                 </div>
               </div>
             </Card>
-
-            {/* Similar Notes */}
-            <Card>
-              <div className="p-4 border-b border-accent/30">
-                <h3 className="text-lg font-semibold text-heading">
-                  Benzer Notlar
-                </h3>
-              </div>
-              <div className="p-4 space-y-3">
-                {NoteData.filter(
-                  (n: (typeof NoteData)[0]) => n.category === note.courseName
-                )
-                  .slice(0, 3)
-                  .map((relatedNote: (typeof NoteData)[0]) => (
-                    <div
-                      key={relatedNote.id}
-                      className="group cursor-pointer p-3 bg-accent/10 rounded-lg hover:bg-accent/20 transition-colors duration-200"
-                      onClick={() => navigate(`/note/${relatedNote.id}`)}
-                    >
-                      <div className="flex items-start gap-3">
-                        <img
-                          src={relatedNote.images[0]}
-                          alt={relatedNote.title}
-                          className="w-12 h-12 rounded-lg object-cover"
-                        />
-                        <div className="flex-1 min-w-0">
-                          <h4 className="font-medium text-heading text-sm mb-1 line-clamp-2 group-hover:text-primary transition-colors">
-                            {relatedNote.title}
-                          </h4>
-                          <p className="text-xs text-heading/60 mb-2">
-                            {relatedNote.author}
-                          </p>
-                          <div className="flex items-center gap-1">
-                            <Star className="w-3 h-3 text-accent fill-current" />
-                            <span className="text-xs text-heading/60">
-                              {relatedNote.rate}
-                            </span>
-                          </div>
-                        </div>
-                        <ExternalLink className="w-4 h-4 text-heading/40 group-hover:text-primary transition-colors" />
-                      </div>
-                    </div>
-                  ))}
-              </div>
-            </Card>
-
-            {/* Call to Action */}
-            <Card>
-              <div className="p-6 text-center">
-                <BookOpen className="w-12 h-12 text-primary mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-heading mb-2">
-                  Daha Fazla Not
-                </h3>
-                <p className="text-sm text-heading/70 mb-4">
-                  Binlerce kaliteli not ve kaynak keşfedin
-                </p>
-                <Button
-                  outline
-                  className="w-full"
-                  onClick={() => navigate("/notes")}
-                >
-                  Tüm Notları Görüntüle
-                </Button>
-              </div>
-            </Card>
           </div>
         </div>
       </div>
+
+      <AuthModal
+        isVisible={isAuthModalVisible}
+        onHide={() => setIsAuthModalVisible(false)}
+      />
     </div>
   );
 };

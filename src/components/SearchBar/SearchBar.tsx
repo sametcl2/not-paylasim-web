@@ -1,10 +1,18 @@
-import { HelperText, TextInput } from "@/components/elements/text-input";
-import { useForm } from "react-hook-form";
 import Button from "@/components/elements/button";
+import { HelperText, TextInput } from "@/components/elements/text-input";
+import { SortBy } from "@/types/search";
 import { Search } from "lucide-react";
+import { useForm } from "react-hook-form";
 
 type SearchBarProps = {
   onSearch: (query: string) => void;
+  buttonName?: string;
+  showFilters?: boolean;
+  selectedCategory?: string;
+  categoryFilters?: { label: string; value: string }[];
+  sortBy?: SortBy;
+  onCategoryChange?: (category: string) => void;
+  onSortByChange?: (sortBy: SortBy) => void;
 };
 
 export const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {

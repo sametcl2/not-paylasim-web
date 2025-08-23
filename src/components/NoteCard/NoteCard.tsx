@@ -35,7 +35,6 @@ export const NoteCard = ({ note, className = "" }: NoteCardProps) => {
     navigate(`/note/${note._id}`);
   };
 
-  // Normalize data between different structures
   const displayData = {
     rating: note.rating || note.rating || 0,
     downloads: note.downloadCount || note.downloadCount || 0,
@@ -58,7 +57,6 @@ export const NoteCard = ({ note, className = "" }: NoteCardProps) => {
       onClick={handleCardClick}
       className={`relative bg-white border border-accent/50 hover:border-primary/40 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer group hover:-translate-y-1 ${className}`}
     >
-      {/* Image Carousel */}
       <div className="relative group/carousel">
         <div className="relative h-48 bg-accent/10 overflow-hidden">
           <img
@@ -67,7 +65,6 @@ export const NoteCard = ({ note, className = "" }: NoteCardProps) => {
             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
           />
 
-          {/* Navigation arrows */}
           {note.imageUrls.length > 1 && (
             <>
               <button
@@ -85,14 +82,12 @@ export const NoteCard = ({ note, className = "" }: NoteCardProps) => {
             </>
           )}
 
-          {/* Price badge */}
           <div className="absolute top-4 right-4">
             <div className="bg-primary text-white px-3 py-1.5 rounded-full shadow-lg">
               <span className="text-sm font-bold">₺{}</span>
             </div>
           </div>
 
-          {/* Category badge */}
           <div className="absolute top-4 left-4">
             <span className="inline-flex items-center bg-white/90 text-heading px-3 py-1.5 rounded-full text-xs font-semibold shadow-lg">
               {displayData.category}
@@ -100,7 +95,6 @@ export const NoteCard = ({ note, className = "" }: NoteCardProps) => {
           </div>
         </div>
 
-        {/* Image indicators */}
         {note.imageUrls.length > 1 && (
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5">
             {note.imageUrls.map((_, index) => (
@@ -118,22 +112,19 @@ export const NoteCard = ({ note, className = "" }: NoteCardProps) => {
         )}
       </div>
 
-      {/* Content */}
       <div className="p-6 bg-white">
-        {/* Title and Rating */}
         <div className="flex items-start justify-between mb-3">
           <h3 className="font-bold text-heading text-base leading-tight group-hover:text-primary transition-colors flex-1 pr-2">
             {note.title}
           </h3>
-          <div className="flex items-center gap-1 bg-accent/20 px-2 py-1 rounded-lg">
-            <Star className="w-3.5 h-3.5 text-accent fill-current" />
-            <span className="text-sm font-semibold text-accent">
+          <div className="flex items-center gap-1 bg-yellow-100 px-2 py-1 rounded-lg">
+            <Star className="w-3.5 h-3.5 text-yellow-500 fill-current" />
+            <span className="text-sm font-semibold text-yellow-600">
               {displayData.rating}
             </span>
           </div>
         </div>
 
-        {/* University and Professor */}
         <div className="mb-4">
           <p className="text-sm font-medium text-primary/80 mb-1">
             {note.university}
@@ -141,7 +132,6 @@ export const NoteCard = ({ note, className = "" }: NoteCardProps) => {
           <p className="text-xs text-heading/60">{note.professor}</p>
         </div>
 
-        {/* Tags */}
         <div className="flex flex-wrap gap-2 mb-4">
           {note.tags.slice(0, 3).map((tag, index) => (
             <span

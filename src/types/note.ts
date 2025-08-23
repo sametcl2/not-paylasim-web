@@ -1,6 +1,10 @@
 export type Note = {
   _id: string;
-  owner: string;
+  owner: {
+    username: string;
+    email: string;
+    name: string;
+  };
   title: string;
   description: string;
   courseName: string;

@@ -7,7 +7,7 @@ const extendedApi = noteApi.injectEndpoints({
   endpoints: (builder) => ({
     searchNote: builder.query<SearchNoteResponseType, SearchNoteRequestType>({
       query: (query) => ({
-        url: `/notes/search?keyword=${query}`,
+        url: `/notes/search?${query}`,
         method: "GET",
       }),
       async onQueryStarted(_, { queryFulfilled, dispatch }) {
