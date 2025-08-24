@@ -11,7 +11,7 @@ export const Search = () => {
     useLazySearchNoteQuery();
 
   const { searchTerm, setSearchTerm, updateUrlParams, resetFilters } =
-    useSearchState({ notesData });
+    useSearchState();
 
   const searchParams = useMemo(() => {
     const params: Record<string, string> = {};

@@ -11,7 +11,7 @@ export const FeaturedNotes = () => {
       owner: {
         username: "user1",
         email: "user1@example.com",
-        name: "John Doe"
+        name: "John Doe",
       },
       title: "Diferansiyel Denklemler - Tam Kurs Notları",
       description:
@@ -40,7 +40,7 @@ export const FeaturedNotes = () => {
       owner: {
         username: "user2",
         email: "user2@example.com",
-        name: "Jane Smith"
+        name: "Jane Smith",
       },
       title: "Fizik 1 - Mekanik Konuları",
       description:
@@ -69,7 +69,7 @@ export const FeaturedNotes = () => {
       owner: {
         username: "user3",
         email: "user3@example.com",
-        name: "Mike Johnson"
+        name: "Mike Johnson",
       },
       title: "Organik Kimya - Reaksiyon Mekanizmaları",
       description:
@@ -98,7 +98,7 @@ export const FeaturedNotes = () => {
       owner: {
         username: "user4",
         email: "user4@example.com",
-        name: "Sarah Wilson"
+        name: "Sarah Wilson",
       },
       title: "Algoritma ve Programlama",
       description:
@@ -127,7 +127,7 @@ export const FeaturedNotes = () => {
       owner: {
         username: "user5",
         email: "user5@example.com",
-        name: "David Brown"
+        name: "David Brown",
       },
       title: "Lineer Cebir - Matris İşlemleri",
       description: "Lineer cebir ve matris işlemlerini kapsayan detaylı notlar",
@@ -155,7 +155,7 @@ export const FeaturedNotes = () => {
       owner: {
         username: "user6",
         email: "user6@example.com",
-        name: "Emily Davis"
+        name: "Emily Davis",
       },
       title: "İngilizce Grammar - Complete Guide",
       description:
