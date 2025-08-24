@@ -22,8 +22,6 @@ import {
 
 export const baseUrl = import.meta.env.VITE_API_URL;
 
-console.log(baseUrl);
-
 const mutex = new Mutex();
 
 const executeBaseQuery = (
