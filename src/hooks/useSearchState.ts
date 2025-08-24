@@ -1,27 +1,11 @@
-import { SearchNoteResponseType } from "@/types/note";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router";
 
-export const useSearchState = ({
-  notesData,
-}: {
-  notesData: SearchNoteResponseType | undefined;
-}) => {
+export const useSearchState = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
   const [searchTerm, setSearchTerm] = useState<string>("");
-
-  const categoryFilters = useMemo(() => {
-    const filters = notesData?.data.map((note) => {
-      return {
-        label: note.courseName,
-        value: note.courseName,
-      };
-    });
-
-    return [{ value: "all", label: "Tümü" }, ...new Set(filters)];
-  }, [searchTerm]);
 
   useEffect(() => {
     const keyword = searchParams.get("keyword");

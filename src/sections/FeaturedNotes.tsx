@@ -8,7 +8,11 @@ export const FeaturedNotes = () => {
   const featuredNotes: Note[] = [
     {
       _id: "1",
-      owner: "user1",
+      owner: {
+        username: "user1",
+        email: "user1@example.com",
+        name: "John Doe"
+      },
       title: "Diferansiyel Denklemler - Tam Kurs Notları",
       description:
         "Diferansiyel denklemleri kapsamlı bir şekilde anlatan ders notları",
@@ -33,7 +37,11 @@ export const FeaturedNotes = () => {
     },
     {
       _id: "2",
-      owner: "user2",
+      owner: {
+        username: "user2",
+        email: "user2@example.com",
+        name: "Jane Smith"
+      },
       title: "Fizik 1 - Mekanik Konuları",
       description:
         "Fizik mekanik konularını detaylı bir şekilde anlatan ders notları",
@@ -58,7 +66,11 @@ export const FeaturedNotes = () => {
     },
     {
       _id: "3",
-      owner: "user3",
+      owner: {
+        username: "user3",
+        email: "user3@example.com",
+        name: "Mike Johnson"
+      },
       title: "Organik Kimya - Reaksiyon Mekanizmaları",
       description:
         "Organik kimya reaksiyon mekanizmalarını detaylı anlatan notlar",
@@ -83,7 +95,11 @@ export const FeaturedNotes = () => {
     },
     {
       _id: "4",
-      owner: "user4",
+      owner: {
+        username: "user4",
+        email: "user4@example.com",
+        name: "Sarah Wilson"
+      },
       title: "Algoritma ve Programlama",
       description:
         "Algoritma ve programlama temellerini öğreten kapsamlı notlar",
@@ -108,7 +124,11 @@ export const FeaturedNotes = () => {
     },
     {
       _id: "5",
-      owner: "user5",
+      owner: {
+        username: "user5",
+        email: "user5@example.com",
+        name: "David Brown"
+      },
       title: "Lineer Cebir - Matris İşlemleri",
       description: "Lineer cebir ve matris işlemlerini kapsayan detaylı notlar",
       courseName: "Matematik",
@@ -132,7 +152,11 @@ export const FeaturedNotes = () => {
     },
     {
       _id: "6",
-      owner: "user6",
+      owner: {
+        username: "user6",
+        email: "user6@example.com",
+        name: "Emily Davis"
+      },
       title: "İngilizce Grammar - Complete Guide",
       description:
         "İngilizce dilbilgisi kurallarını kapsamlı şekilde anlatan rehber",

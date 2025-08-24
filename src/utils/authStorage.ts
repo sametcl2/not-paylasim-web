@@ -1,12 +1,12 @@
 import { LocalStorageKeys } from "@/constants/storage";
-import { AuthType, UserType } from "@/types/auth";
+import { AuthType, TokenPayloadType } from "@/types/auth";
 
 export const getUserFromLocalStorage = () => {
   const accessToken = localStorage.getItem(LocalStorageKeys.AccessToken);
   const refreshToken = localStorage.getItem(LocalStorageKeys.RefreshToken);
   const user = localStorage.getItem(LocalStorageKeys.User);
 
-  const parsedUser = user ? (JSON.parse(user) as UserType) : null;
+  const parsedUser = user ? (JSON.parse(user) as TokenPayloadType) : null;
 
   return { accessToken, refreshToken, user: parsedUser };
 };

@@ -1,5 +1,4 @@
 import { SearchBar } from "@/components/SearchBar";
-import { SortBy } from "@/types/search";
 import { Search as SearchIcon } from "lucide-react";
 
 interface SearchFilterCardProps {

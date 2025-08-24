@@ -1,7 +1,7 @@
-import { UserType } from "./auth";
+import { TokenPayloadType } from "./auth";
 
 export type LoginResponseType = {
-  user: UserType;
+  user: TokenPayloadType;
   accessToken: string;
   refreshToken: string;
 };
