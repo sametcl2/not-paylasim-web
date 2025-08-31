@@ -1,6 +1,6 @@
 import { NotesGrid } from "@/components/NotesGrid";
 import { Note } from "@/types/note";
-import { ArrowLeft, CreditCard, ShoppingBag } from "lucide-react";
+import { CreditCard, ShoppingBag } from "lucide-react";
 import { useLocation, useNavigate } from "react-router";
 import Button from "@/components/elements/button";
 
@@ -16,7 +16,7 @@ export const PurchasedNotes = () => {
   const totalSpent =
     purchasedNotes?.reduce(
       (total: number, note: Note) => total + (note.price || 0),
-      0
+      0,
     ) || 0;
 
   return (
