@@ -2,15 +2,7 @@ import { useLazyGetUserByIdQuery } from "@/services/user/getUserById";
 import { selectUser } from "@/store/auth";
 import { useSelector } from "@/store/setup/hooks";
 import { TokenPayloadType } from "@/types/auth";
-import {
-  BarChart3,
-  Bell,
-  BookOpen,
-  CreditCard,
-  Heart,
-  Settings,
-  User,
-} from "lucide-react";
+import { BookOpen, CreditCard, Heart, Settings, User } from "lucide-react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
 
@@ -18,11 +10,7 @@ export const Profile = () => {
   const navigate = useNavigate();
   const { id: userId } = useSelector(selectUser) as TokenPayloadType;
 
-  console.log("User ID:", userId);
-
   const [fetchUser, { data: user, isLoading }] = useLazyGetUserByIdQuery();
-
-  console.log({ user });
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -33,12 +21,24 @@ export const Profile = () => {
     fetchUserData();
   }, [userId]);
 
+  const formatDate = (dateString: string | undefined) => {
+    if (!dateString) return "Bilinmiyor";
+    return new Date(dateString).toLocaleDateString("tr-TR", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
+
   const menuItems = [
     {
       icon: BookOpen,
       title: "Notlarım",
       description: "Yüklediğiniz ders notlarını yönetin",
-      action: () => navigate("/profile/my-notes"),
+      action: () =>
+        navigate("/profile/my-notes", {
+          state: { ownedNotes: user?.ownedNotes },
+        }),
     },
     {
       icon: Heart,
@@ -50,19 +50,10 @@ export const Profile = () => {
       icon: CreditCard,
       title: "Satın Aldıklarım",
       description: "Satın aldığınız notları görüntüleyin",
-      action: () => navigate("/profile/purchases"),
-    },
-    {
-      icon: BarChart3,
-      title: "İstatistikler",
-      description: "Hesap aktivitelerinizi takip edin",
-      action: () => navigate("/profile/stats"),
-    },
-    {
-      icon: Bell,
-      title: "Bildirimler",
-      description: "Bildirim ayarlarınızı yönetin",
-      action: () => navigate("/profile/notifications"),
+      action: () =>
+        navigate("/profile/purchases", {
+          state: { purchasedNotes: user?.purchasedNotes },
+        }),
     },
     {
       icon: Settings,
@@ -101,18 +92,18 @@ export const Profile = () => {
               <h1 className="text-3xl md:text-4xl font-bold text-heading mb-2"></h1>
               <p className="text-lg text-heading/70 mb-4">{user?.username}</p>
               <div className="flex flex-wrap gap-4 text-sm text-heading/60">
-                <span>Üyelik tarihi: Ocak 2024</span>
+                <span>Üyelik tarihi: {formatDate(user?.membershipDate)}</span>
                 <span>•</span>
-                <span>Toplam not: 12</span>
+                <span>Toplam not: {user?.publishedNotesCount}</span>
                 <span>•</span>
-                <span>Toplam indirme: 45</span>
+                <span>Toplam indirme: {user?.purchasedNotesCount}</span>
               </div>
             </div>
           </div>
         </div>
 
         {/* Menu Items */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {menuItems.map((item, index) => {
             const IconComponent = item.icon;
             return (

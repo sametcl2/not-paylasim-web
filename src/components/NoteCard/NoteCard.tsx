@@ -84,11 +84,11 @@ export const NoteCard = ({ note, className = "" }: NoteCardProps) => {
 
           <div className="absolute top-4 right-4">
             <div className="bg-primary text-white px-3 py-1.5 rounded-full shadow-lg">
-              <span className="text-sm font-bold">₺{}</span>
+              <span className="text-sm font-bold">{note.price} ₺</span>
             </div>
           </div>
 
-          <div className="absolute top-4 left-4">
+          <div className="absolute top-4 left-4 max-w-[60%]">
             <span className="inline-flex items-center bg-white/90 text-heading px-3 py-1.5 rounded-full text-xs font-semibold shadow-lg">
               {displayData.category}
             </span>

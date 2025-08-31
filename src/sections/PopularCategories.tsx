@@ -1,6 +1,13 @@
+import { useNavigate } from "react-router";
 import Button from "../components/elements/button";
 
 export const PopularCategories = () => {
+  const navigate = useNavigate();
+
+  const handleCategoryClick = (categoryName: string) => {
+    navigate(`/search?keyword=${encodeURIComponent(categoryName)}`);
+  };
+
   const categories = [
     {
       name: "Matematik",
@@ -61,6 +68,7 @@ export const PopularCategories = () => {
           {categories.map((category, index) => (
             <div
               key={index}
+              onClick={() => handleCategoryClick(category.name)}
               className={`${category.color} rounded-xl p-6 transition-all duration-300 cursor-pointer hover:shadow-lg hover:-translate-y-1 border`}
             >
               <h3 className="font-semibold text-heading mb-2 text-lg">

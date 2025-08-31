@@ -31,7 +31,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   }
 
   return (
-    <div className="max-w-2xl mx-auto md:mx-0">
+    <div className="w-full mx-auto md:mx-0 ">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex items-center gap-2">
           <TextInput
@@ -45,11 +45,9 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
               required: "Bu alan boş bırakılamaz",
             })}
           />
-          <div className="pr-2">
-            <Button type="submit" variant="primary" size="sm">
-              Notlar Gelsin
-            </Button>
-          </div>
+          <Button type="submit" variant="primary">
+            Notlar Gelsin
+          </Button>
         </div>
         {errors.search && (
           <HelperText className="mt-3 text-center md:text-left text-destructive font-medium">

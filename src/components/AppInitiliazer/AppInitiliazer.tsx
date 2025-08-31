@@ -3,7 +3,9 @@ import { CreateNote } from "@/pages/CreateNote";
 import { Home } from "@/pages/Home";
 import { Note } from "@/pages/Note";
 import NotFound from "@/pages/NotFound";
+import { OwnNotes } from "@/pages/OwnNotes";
 import { Profile } from "@/pages/Profile";
+import { PurchasedNotes } from "@/pages/PurchasedNotes";
 import { Search } from "@/pages/Search";
 import { Header } from "@/sections/Header";
 import { setUser } from "@/store/auth";
@@ -40,6 +42,22 @@ export const AppInitializer = () => {
             element={
               <ProtectedRoute>
                 <Profile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile/my-notes"
+            element={
+              <ProtectedRoute>
+                <OwnNotes />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile/purchases"
+            element={
+              <ProtectedRoute>
+                <PurchasedNotes />
               </ProtectedRoute>
             }
           />

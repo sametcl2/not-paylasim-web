@@ -1,3 +1,5 @@
+import { Note } from "./note";
+
 export type GetUserByIdResponseType = {
   _id: string;
   email: string;
@@ -8,6 +10,11 @@ export type GetUserByIdResponseType = {
   department?: string;
   avatar?: string;
   balance: number;
+  publishedNotesCount: number;
+  purchasedNotesCount: number;
+  ownedNotes: Note[];
+  purchasedNotes: Note[];
+  membershipDate: string;
   refreshToken: string;
 };
 

@@ -4,5 +4,5 @@ export { default as Card } from "./card";
 export { default as Carousel } from "./carousel";
 export { Modal, ModalHeader, ModalBody, ModalFooter } from "./modal";
 export { default as Spinner } from "./spinner";
-export { TextInput, HelperText } from "./text-input";
+export { TextInput, TextArea, HelperText } from "./text-input";
 export { Toast } from "./toast";

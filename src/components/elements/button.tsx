@@ -8,7 +8,7 @@ type ButtonVariant =
   | "danger"
   | "success"
   | "info";
-type ButtonSize = "sm" | "md" | "lg";
+type ButtonSize = "xs" | "sm" | "md" | "lg";
 
 type ButtonProps = {
   children: ReactNode;
@@ -71,14 +71,16 @@ const Button: FC<ButtonProps> = ({
 
   const getSizeClasses = () => {
     switch (size) {
+      case "xs":
+        return "px-2 py-1.5 text-xs font-medium";
       case "sm":
-        return "px-4 py-2 text-sm font-medium";
+        return "px-3 py-2 text-sm font-medium";
       case "md":
-        return "px-6 py-2.5 text-base font-medium";
+        return "px-4 py-2.5 text-base font-medium";
       case "lg":
-        return "px-8 py-3 text-lg font-medium";
+        return "px-5 py-3 text-lg font-medium";
       default:
-        return "px-6 py-2.5 text-base font-medium";
+        return "px-4 py-2.5 text-base font-medium";
     }
   };
 

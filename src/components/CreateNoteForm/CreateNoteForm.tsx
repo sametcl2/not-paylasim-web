@@ -17,7 +17,11 @@ import {
 } from "lucide-react";
 import { useNavigate } from "react-router";
 import Button from "@/components/elements/button";
-import { HelperText, TextInput } from "@/components/elements/text-input";
+import {
+  HelperText,
+  TextInput,
+  TextArea,
+} from "@/components/elements/text-input";
 import {
   defaultValues,
   CreateNoteFields,
@@ -72,8 +76,6 @@ export const CreateNoteForm = ({
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (files) {
-      // Burada dosya yükleme işlemi yapılacak
-      // Şimdilik simüle ediyoruz
       const newImageUrls = Array.from(files).map(
         (_, index) => `uploaded-image-${Date.now()}-${index}.jpg`
       );
@@ -132,15 +134,12 @@ export const CreateNoteForm = ({
               </div>
               Açıklama *
             </label>
-            <textarea
+            <TextArea
               placeholder="Notunuz hakkında detaylı açıklama yazın..."
               {...registerField(CreateNoteFields.Description)}
               rows={5}
-              className={`w-full px-4 py-3 border rounded-xl focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/10 resize-none transition-all duration-200 group-hover:border-primary/50 ${
-                errors[CreateNoteFields.Description]
-                  ? "border-red-500"
-                  : "border-accent/30"
-              }`}
+              color={errors[CreateNoteFields.Description] ? "error" : "gray"}
+              className="group-hover:border-primary/50 transition-colors"
             />
             {errors[CreateNoteFields.Description] && (
               <HelperText color="error">
