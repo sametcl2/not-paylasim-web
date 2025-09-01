@@ -31,9 +31,9 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   }
 
   return (
-    <div className="w-full mx-auto md:mx-0 ">
+    <div className="w-full mx-auto md:mx-0">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
           <TextInput
             type="text"
             icon={Search}
